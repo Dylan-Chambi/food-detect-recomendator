@@ -1,0 +1,7 @@
+path: /content/drive/MyDrive/food-dataset
+train: ./train
+val: ./val
+
+nc: 15
+
+names: ["steak", "bacon", "cauliflower", "rice", "chesse", "cookies", "french fries", "fried chicken", "fried egg", "ice cream", "lettuce", "noodles", "pancake", "waffle", "donut"]
