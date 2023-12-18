@@ -8,3 +8,4 @@ ultralytics
 python-multipart
 openai
 langchain
+sqlmodel

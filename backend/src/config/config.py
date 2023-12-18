@@ -1,5 +1,9 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import cache
+from sqlalchemy import create_engine
+
+
+engine: str = create_engine("sqlite:///backend/src/db/food.db")
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file="Backend/.env")

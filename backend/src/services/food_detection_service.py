@@ -10,13 +10,14 @@ from src.models.general_detector import GeneralDetector
 from src.schemas.food_item import FoodItem
 from src.schemas.image_detection import ImageDetection
 from src.schemas.recomendation_response import Recomendation
-
+from src.schemas.db_models import DBFoodItem, DBRecomendation, DBSingleDietaryRecomendation
+from sqlmodel import Session
+from src.config.config import engine
 
 def get_food_recomendations(img_file: UploadFile, confidence: float, obj_detector: GeneralDetector, recommend_predictor: GeneralRecomendator) -> Recomendation:
 
     validate_image(img_file)
 
-    # save image to path
     image_bytes = img_file.file.read()
     image = np.frombuffer(image_bytes, dtype=np.uint8)
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
@@ -56,6 +57,46 @@ def get_food_recomendations(img_file: UploadFile, confidence: float, obj_detecto
             sugar=sum([single_rec.sugar * single_rec.quantity for single_rec in recomendation_pred.dietary_recomendations]),
             sodium=sum([single_rec.sodium * single_rec.quantity for single_rec in recomendation_pred.dietary_recomendations])
         )
+
+        db_food_list = [
+            DBFoodItem(food_name=item.food_name, quantity=item.quantity)
+            for item in food_list
+        ]
+
+        db_single_dietary_recomendations = [
+            DBSingleDietaryRecomendation(
+                food_name=sdr.food_name,
+                quantity=sdr.quantity,
+                calories=sdr.calories,
+                proteins=sdr.proteins,
+                fats=sdr.fats,
+                carbohydrates=sdr.carbohydrates,
+                fiber=sdr.fiber,
+                sugar=sdr.sugar,
+                sodium=sdr.sodium,
+                recomendation=sdr.recomendation,
+            )
+            for sdr in recomendation_pred.dietary_recomendations
+        ]
+
+        db_recomendation = DBRecomendation(
+            listed_foods=db_food_list,
+            score=recomendation.score,
+            calories=recomendation.calories,
+            proteins=recomendation.proteins,
+            fats=recomendation.fats,
+            carbohydrates=recomendation.carbohydrates,
+            fiber=recomendation.fiber,
+            sugar=recomendation.sugar,
+            sodium=recomendation.sodium,
+            general_recomendation=recomendation.general_recomendation,
+            dietary_recomendations=db_single_dietary_recomendations,
+            image=img_dect.image_file,
+        )
+
+        with Session(engine) as session:
+            session.add(db_recomendation)
+            session.commit()
 
         return recomendation
     

@@ -1,11 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.routers.router import router
-from src.config.config import get_settings
+from src.config.config import get_settings, engine
+from sqlmodel import SQLModel
 
 SETTINGS = get_settings()
 
-
+SQLModel.metadata.create_all(engine)
 
 app = FastAPI(title=SETTINGS.api_name, version=SETTINGS.revision)
 
