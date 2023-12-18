@@ -4,6 +4,7 @@ from src.schemas.dietary_recomendation import SingleDietaryRecomendation
 
 
 class Recomendation(BaseModel):
+    id: int | None = None
     listed_foods: list[FoodItem]
     score: int
     calories: float
