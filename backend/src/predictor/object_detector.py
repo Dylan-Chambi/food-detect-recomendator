@@ -23,7 +23,7 @@ class ObjectDetector(GeneralDetector):
         return self.model.info()
     
 
-    def detect_objects(self, image: np.ndarray, confidence: float):
+    def detect_objects(self, image, confidence: float) -> ImageDetection:
         results = self.model.predict(image, conf=confidence)
 
         class_ids = []

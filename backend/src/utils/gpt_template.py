@@ -6,7 +6,7 @@ The recommended diet should be based on the nutritional composition of the foods
 The recommended diet also contains a description of the listed foods, and a description of the recommended diet.
 The general recommendation must contain a description of all the foods provided and how it's combination can be beneficial or detrimental to the health of the user.
 The score ranges is a int number and goes from 0 to 100, where 0 indicates that the nutritional composition of the listed foods is very unhealthy and not recommended, and 100 indicates that the nutritional composition of the listed foods is very healthy and recommended.
-
+You must provide each nutritional composition as if the food is a single serving. So if the quantity of the food is 2, you must'nt multiply the nutritional composition by 2, but instead, you must provide the nutritional composition of a single serving of the food.
 
 Base on a food list as follows:
 - Apple (1)
@@ -56,7 +56,7 @@ The nutritional composition of each food item is as follows:
 
 The general recommendation is as follows:
 - Food list: Apple (1), Banana (2), Ice cream (1)
-- General score: 80
+- General score: 70
 - Recomendation: Great choice incorporating an apple and a banana into your diet! These fruits provide a variety of essential vitamins, minerals, and fiber for your overall health. Apples are rich in antioxidants, while bananas contribute potassium and sustained energy due to their natural carbohydrates.
 
 However, it's important to note the ice cream you consumed. Although delicious, ice cream often contains high amounts of added sugars and saturated fats. To maintain a nutritional balance, consider healthier dessert options, such as Greek yogurt with fruit or a smoothie made with frozen fruits.

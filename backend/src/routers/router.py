@@ -5,6 +5,7 @@ from src.predictor.gpt_food_recomendation import GPTPredictor
 from src.models.general_recomendator import GeneralRecomendator
 from src.models.general_detector import GeneralDetector
 from src.schemas.food_request import FoodRequest
+from src.schemas.recomendation_response import Recomendation
 
 
 def get_object_segmentator() -> GeneralDetector:
@@ -21,7 +22,7 @@ router = APIRouter()
 #     return get_service_status(predictor_model)
 
 @router.post("/predict-food-image")
-def predict(food_request: FoodRequest = Depends(), obj_detector: GeneralDetector = Depends(get_object_segmentator), recommend_predictor: GeneralRecomendator = Depends(get_recommend_predictor)):
+def predict(food_request: FoodRequest = Depends(), obj_detector: GeneralDetector = Depends(get_object_segmentator), recommend_predictor: GeneralRecomendator = Depends(get_recommend_predictor)) -> Recomendation:
     return food_detection(
         food_request.image_file, food_request.confidence_threshold, obj_detector, recommend_predictor
     )
