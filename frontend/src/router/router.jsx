@@ -3,6 +3,7 @@ import {
     createBrowserRouter
 } from "react-router-dom";
 import { FoodPredPage } from "../pages/FoodPredPage";
+import { FoodRecomendation } from "../pages/FoodRecomendation";
 
 const router = createBrowserRouter([
     {
@@ -11,7 +12,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/food-recomendation/:id",
-        element: <FoodPredPage />
+        element: <FoodRecomendation />
     },
     {
         path: "/food-recomendation-list",
