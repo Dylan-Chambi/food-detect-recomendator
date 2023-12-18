@@ -1,7 +1,10 @@
+import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 from functools import cache
 from sqlalchemy import create_engine
 
+if not os.path.exists("backend/src/db"):
+    os.makedirs("backend/src/db")
 
 engine: str = create_engine("sqlite:///backend/src/db/food.db")
 
