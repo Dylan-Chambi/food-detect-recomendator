@@ -1,0 +1,8 @@
+uvicorn==0.24.0.post1
+fastapi==0.104.1
+pydantic
+pydantic_settings
+numpy
+Pillow
+ultralytics
+python-multipart
