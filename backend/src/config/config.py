@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     revision: str = "local"
     yolo_version: str = "yolov8x-custom.pt" # El modelo a cargar debe estar en backend/src/dectection_models
     log_level: str = "DEBUG"
+    api_key: str = ""
+    gpt_model: str = "gpt-3.5-turbo-1106"
     port: int = 8080
 
 @cache

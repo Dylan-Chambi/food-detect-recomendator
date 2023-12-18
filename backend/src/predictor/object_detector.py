@@ -1,9 +1,9 @@
 from ultralytics import YOLO
 import cv2
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont, ImageOps
+from PIL import Image
 import random
-from .general_detector import GeneralDetector
+from src.models.general_detector import GeneralDetector
 from src.schemas.detection_object import DetectionObject
 from src.schemas.image_detection import ImageDetection
 from src.config.config import get_settings

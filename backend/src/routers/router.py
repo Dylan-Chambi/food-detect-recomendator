@@ -1,12 +1,17 @@
 from fastapi import APIRouter, Depends
 from src.controllers.image_detector_controller import food_detection
-from src.models.object_detector import ObjectDetector
+from src.predictor.object_detector import ObjectDetector
+from src.predictor.gpt_food_recomendation import GPTPredictor
+from src.models.general_recomendator import GeneralRecomendator
+from src.models.general_detector import GeneralDetector
 from src.schemas.food_request import FoodRequest
-from src.schemas.image_detection import ImageDetection
 
 
-def get_object_segmentator():
+def get_object_segmentator() -> GeneralDetector:
     return ObjectDetector()
+
+def get_recommend_predictor() -> GeneralRecomendator:
+    return GPTPredictor()
 
 router = APIRouter()
 
@@ -16,9 +21,9 @@ router = APIRouter()
 #     return get_service_status(predictor_model)
 
 @router.post("/predict-food-image")
-def predict(food_request: FoodRequest = Depends(), predictor: ObjectDetector = Depends(get_object_segmentator)) -> ImageDetection:
+def predict(food_request: FoodRequest = Depends(), obj_detector: GeneralDetector = Depends(get_object_segmentator), recommend_predictor: GeneralRecomendator = Depends(get_recommend_predictor)):
     return food_detection(
-        food_request.image_file, food_request.confidence_threshold, predictor
+        food_request.image_file, food_request.confidence_threshold, obj_detector, recommend_predictor
     )
     
 

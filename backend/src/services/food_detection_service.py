@@ -1,26 +1,40 @@
 from fastapi import UploadFile, Response
-from src.models.object_detector import ObjectDetector
+from src.predictor.object_detector import ObjectDetector
 import io
 from PIL import Image
 import numpy as np
 from src.middlewares.image_detector_middleware import validate_image
+from src.models.general_recomendator import GeneralRecomendator
+from src.models.general_detector import GeneralDetector
+from src.schemas.food_item import FoodItem
 from src.schemas.image_detection import ImageDetection
 
-def get_food_recomendations(img_file: UploadFile, confidence: float, predictor: ObjectDetector) -> ImageDetection:
-    # Validate the image file
+
+def get_food_recomendations(img_file: UploadFile, confidence: float, obj_detector: GeneralDetector, recommend_predictor: GeneralRecomendator):
+
     validate_image(img_file)
 
-    # Read the image file into a stream
     img_stream = io.BytesIO(img_file.file.read())
-
-    # Convert to a Pillow image
     img_obj = Image.open(img_stream)
-
-    # Convert to a NumPy array
     img_array = np.array(img_obj)
 
-    # Perform image segmentation using the provided predictor
-    img_dect = predictor.detect_objects(img_array, confidence)
+    img_dect: ImageDetection = obj_detector.detect_objects(img_array, confidence)
 
-    # Return the segmented image as a FastAPI Response
-    return img_dect
+    # food_list: FoodItem = [FoodItem(food_name="bacon", quantity=3), FoodItem(food_name="french-fries", quantity=1), FoodItem(food_name="lettuce", quantity=2)]
+    items = {}
+
+
+    for food in img_dect.detection_objects:
+        if food.class_name in items:
+            items[food.class_name] += 1
+        else:
+            items[food.class_name] = 1
+
+    food_list = []
+
+    for key, value in items.items():
+        food_list.append(FoodItem(food_name=key, quantity=value))
+
+    res = recommend_predictor.analyze_food_list(food_list)
+
+    return res
