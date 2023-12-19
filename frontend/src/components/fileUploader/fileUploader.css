@@ -1,0 +1,78 @@
+/* Component style */
+.fileUploader {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    background: #175b36;
+    border-radius: 80px;
+    overflow: hidden;
+    outline: 2px dashed #00ab4f;
+}
+
+.fileUploader > div > p{
+    padding: 5px;
+    margin: 0;
+    color: rgb(255, 255, 255);
+}
+
+/* Form style */
+.form-file {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0px;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.form-file input[type="file"] {
+    display: none;
+}
+
+.form-file img {
+    width: auto;
+    height: 20vh;
+}
+
+/* drag-drop area style */
+.drag-drop-area {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    align-items: center;
+    justify-content: center;
+}
+
+.drag-drop-area:-moz-drag-over {
+    background-color: #175b36;
+    color: #ffffff;
+}
+
+.drag-drop-text {
+    text-align: center;
+    color: #175b36;
+}
+
+/* misc */
+.browse-button {
+    cursor: pointer;
+    text-decoration: underline;
+    font-weight: bold;
+}
+.text-back{
+    display: flex;
+    margin-top: 10px;
+    background-color: crimson;
+    color: #ffffff;
+    padding: 0px 10px;
+    width: fit-content;
+    height: fit-content;
+}

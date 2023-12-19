@@ -36,15 +36,15 @@ function Header(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-            <Typography variant="h6" sx={{ my: 2 }}>
-                MUI
+            <Typography variant="h6" sx={{ my: 2, fontWeight: 'bold', color: '#1b5e20' }}>
+                Dietary Recomendation
             </Typography>
             <Divider />
             <List>
                 {navItems.map((item) => (
                     <ListItem key={item.name}>
-                        <ListItemButton sx={{ textAlign: 'center' }} href={item.path}>
-                            <ListItemText primary={item.name} />
+                        <ListItemButton sx={{ textAlign: 'center', color: '#1b5e20' }} href={item.path}>
+                            <ListItemText primary={item.name} sx={{ fontWeight: 'bold' }} />
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -57,7 +57,7 @@ function Header(props) {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <AppBar component="nav">
+            <AppBar component="nav" sx= {{backgroundColor: 'white', color: '#1b5e20', boxShadow: '2'}}>
                 <Toolbar>
                     <IconButton
                         color="inherit"
@@ -69,15 +69,15 @@ function Header(props) {
                         <MenuIcon />
                     </IconButton>
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' }, fontWeight: 'bold', color: '#1b5e20' }}
                     >
                         Dietary Recomendation
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <Button key={item.name} sx={{ color: '#fff' }} href={item.path}>
+                            <Button key={item.name} sx={{ color: '#1b5e20', ml: '2rem', fontWeight: 'bold' }} href={item.path} component="a" variant="text" color="inherit">
                                 {item.name}
                             </Button>
                         ))}
