@@ -1,9 +1,8 @@
  
 from sqlalchemy.orm import Session
-from src.schemas.food_item import FoodItem
 from src.schemas.dietary_recomendation import DietaryRecomendation, SingleDietaryRecomendation
 from src.schemas.recomendation_response import Recomendation
-from src.schemas.db_models import DBRecomendation, DBSingleDietaryRecomendation, DBFoodItem
+from src.schemas.db_models import DBRecomendation, DBSingleDietaryRecomendation
 from src.config.config import engine
 
 def get_recommendations_from_db() -> list[DBRecomendation]:
@@ -12,13 +11,6 @@ def get_recommendations_from_db() -> list[DBRecomendation]:
         recomendations = [
             Recomendation(
                 id=db_recomendation.id,
-                listed_foods=[
-                    FoodItem(
-                        food_name=db_food.food_name,
-                        quantity=db_food.quantity,
-                    )
-                    for db_food in db_recomendation.listed_foods
-                ],
                 score=db_recomendation.score,
                 calories=db_recomendation.calories,
                 proteins=db_recomendation.proteins,
@@ -55,13 +47,6 @@ def get_recommendation_from_db(recomendation_id: int) -> Recomendation:
         db_recomendation = session.query(DBRecomendation).filter(DBRecomendation.id == recomendation_id).first()
         recomendation = Recomendation(
             id=db_recomendation.id,
-            listed_foods=[
-                FoodItem(
-                    food_name=db_food.food_name,
-                    quantity=db_food.quantity,
-                )
-                for db_food in db_recomendation.listed_foods
-            ],
             score=db_recomendation.score,
             calories=db_recomendation.calories,
             proteins=db_recomendation.proteins,
@@ -93,13 +78,6 @@ def get_recommendation_from_db(recomendation_id: int) -> Recomendation:
 def add_recommendation_to_db(recomendation: Recomendation) -> None:
     with Session(engine) as session:
         db_recomendation = DBRecomendation(
-            listed_foods=[
-                DBFoodItem(
-                    food_name=food.food_name,
-                    quantity=food.quantity,
-                )
-                for food in recomendation.listed_foods
-            ],
             score=recomendation.score,
             calories=recomendation.calories,
             proteins=recomendation.proteins,

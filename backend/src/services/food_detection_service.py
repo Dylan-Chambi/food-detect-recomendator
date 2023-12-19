@@ -7,7 +7,6 @@ import cv2
 from src.middlewares.image_detector_middleware import validate_image
 from src.models.general_recomendator import GeneralRecomendator
 from src.models.general_detector import GeneralDetector
-from src.schemas.food_item import FoodItem
 from src.schemas.image_detection import ImageDetection
 from src.schemas.recomendation_response import Recomendation
 from src.services.food_data_service import add_recommendation_to_db
@@ -32,17 +31,11 @@ def get_food_recomendations(img_file: UploadFile, confidence: float, obj_detecto
         else:
             items[food.class_name] = 1
 
-    food_list: FoodItem = []
 
-    for key, value in items.items():
-        food_list.append(FoodItem(food_name=key, quantity=value))
-
-    if len(food_list) > 0:
-
-        recomendation_pred = recommend_predictor.analyze_food_list(food_list)
+    if len(items) > 0:
+        recomendation_pred = recommend_predictor.analyze_food_list(items)
 
         recomendation: Recomendation = Recomendation(
-            listed_foods=food_list,
             image=img_dect.image_file,
             general_recomendation=recomendation_pred.general_recomendation,
             dietary_recomendations=recomendation_pred.dietary_recomendations,
@@ -64,7 +57,6 @@ def get_food_recomendations(img_file: UploadFile, confidence: float, obj_detecto
     
     else:
         return Recomendation(
-            listed_foods=food_list,
             image=img_dect.image_file,
             general_recomendation="No food detected",
             dietary_recomendations=[],

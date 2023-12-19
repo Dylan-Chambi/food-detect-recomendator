@@ -77,10 +77,10 @@ export const FoodRecList = () => {
                         </Typography>
 
                         <Typography variant="body1" gutterBottom>
-                            {item.listed_foods?.map((food, index) => (
+                            {item.dietary_recomendations?.map((food, index) => (
                                 <span key={index}>
                                     <b style={{ color: '#388e3c' }}>{capitalizeWords(food.food_name)}</b> ({food.quantity})
-                                    {index !== item.listed_foods.length - 1 && ', '}
+                                    {index !== item.dietary_recomendations.length - 1 && ', '}
                                 </span>
                             ))}
                         </Typography>

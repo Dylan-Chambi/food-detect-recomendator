@@ -1,5 +1,5 @@
 from abc import ABC
-from src.schemas.food_item import FoodItem
+from src.schemas.dietary_recomendation import SingleDietaryRecomendation
 
 
 class GeneralRecomendator(ABC):
@@ -7,5 +7,5 @@ class GeneralRecomendator(ABC):
         self.model_name = model_name
         self.model = model
 
-    def analyze_food_list(self, food_list: list[FoodItem]):
+    def analyze_food_list(self, food_list: list[SingleDietaryRecomendation]):
         raise NotImplementedError
