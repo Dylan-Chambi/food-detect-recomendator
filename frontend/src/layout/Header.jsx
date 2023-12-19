@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 const navItems = [
@@ -28,6 +28,7 @@ const navItems = [
 
 function Header(props) {
     const { window } = props;
+    const navigate = useNavigate();
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
     const handleDrawerToggle = () => {
@@ -43,7 +44,7 @@ function Header(props) {
             <List>
                 {navItems.map((item) => (
                     <ListItem key={item.name}>
-                        <ListItemButton sx={{ textAlign: 'center', color: '#1b5e20' }} href={item.path}>
+                        <ListItemButton sx={{ textAlign: 'center', color: '#1b5e20' }} onClick={() => navigate(item.path)}>
                             <ListItemText primary={item.name} sx={{ fontWeight: 'bold' }} />
                         </ListItemButton>
                     </ListItem>
@@ -77,7 +78,7 @@ function Header(props) {
                     </Typography>
                     <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
                         {navItems.map((item) => (
-                            <Button key={item.name} sx={{ color: '#1b5e20', ml: '2rem', fontWeight: 'bold' }} href={item.path} component="a" variant="text" color="inherit">
+                            <Button key={item.name} sx={{ color: '#1b5e20', ml: '2rem', fontWeight: 'bold' }} component="a" variant="text" color="inherit" onClick={() => navigate(item.path)}>
                                 {item.name}
                             </Button>
                         ))}
