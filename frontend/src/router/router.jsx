@@ -1,11 +1,25 @@
 
 import {
-    createBrowserRouter
+    createBrowserRouter, useNavigate
 } from "react-router-dom";
 import { FoodPredPage } from "../pages/FoodPredPage";
 import { FoodRecomendation } from "../pages/FoodRecomendation";
 import { FoodRecList } from "../pages/FoodRecList";
 import Header from "../layout/Header";
+import { useEffect } from "react";
+
+const Redirect = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        navigate('/food-detect-recomendator')
+    }, [])
+    return (
+        <div>
+            Error 404
+        </div>
+    )
+}
 
 const router = createBrowserRouter([
     {
@@ -25,6 +39,10 @@ const router = createBrowserRouter([
                 element: <FoodRecList />
             }
         ]
+    },
+    {
+        path: "/",
+        element: <Redirect />
     }
 ]);
 
