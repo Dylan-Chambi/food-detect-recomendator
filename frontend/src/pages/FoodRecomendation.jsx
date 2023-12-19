@@ -1,6 +1,6 @@
 import { Box, Button, Card, Grid, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import backendAPI from '../config/backendAPI'
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
@@ -14,21 +14,23 @@ function capitalizeWords(inputString) {
 
 export const FoodRecomendation = () => {
     const params = useParams()
+    const navigate = useNavigate()
     const [selectedImg, setSelectedImg] = useState(null)
     const [recomendationData, setRecomendationData] = useState(null)
 
     useEffect(() => {
-        if (params.id) {
+        if (params.id !== undefined && params.id !== null && params.id !== "null") {
             const query = new URLSearchParams()
             query.append('recomendation_id', params.id)
             backendAPI.get(`/get-food-recomendation?${query.toString()}`).then((res) => {
                 setSelectedImg(res.data.image)
                 setRecomendationData(res.data)
-                console.log(res.data)
             }).catch((err) => {
                 console.log(err)
                 alert('Error')
             })
+        } else {
+            navigate('/')
         }
     }, [params.id])
 

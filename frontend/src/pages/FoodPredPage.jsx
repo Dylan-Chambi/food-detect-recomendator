@@ -14,7 +14,11 @@ export const FoodPredPage = () => {
         const formData = new FormData()
         formData.append('image_file', selectedImg)
         backendAPI.post('/predict-food-image', formData).then((res) => {
-            navigate(`/food-recomendation/${res.data.id}`)
+            if (res.data.id !== undefined && res.data.id !== null && res.data.id !== "null") {
+                navigate(`/food-recomendation/${res.data.id}`)
+            } else{
+                alert('Error')
+            }
         }).catch((err) => {
             console.log(err)
             alert('Error')
