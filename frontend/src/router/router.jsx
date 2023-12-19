@@ -9,19 +9,19 @@ import Header from "../layout/Header";
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/food-detect-recomendator",
         element: <Header />,
         children: [
             {
-                path: "/",
+                path: "/food-detect-recomendator",
                 element: <FoodPredPage />
             },
             {
-                path: "/food-recomendation/:id",
+                path: "/food-detect-recomendator/food-recomendation/:id",
                 element: <FoodRecomendation />
             },
             {
-                path: "/food-recomendation-list",
+                path: "/food-detect-recomendator/food-recomendation-list",
                 element: <FoodRecList />
             }
         ]

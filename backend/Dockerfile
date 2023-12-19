@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install libgl1 -y
 COPY requirements.txt /
 RUN pip install -r requirements.txt
 
-RUN curl -L https://storage.googleapis.com/topicos-ia-2023/yolov8x-custom.pt -o ./src/detection_models/yolov8x-custom.pt
+RUN curl -L https://storage.googleapis.com/topicos-ia-2023/yolov8x-custom.pt -o /src/detection_models/yolov8x-custom.pt
 
 COPY ./src /src
 

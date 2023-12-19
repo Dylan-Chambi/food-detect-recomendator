@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const backendAPI = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
+  baseURL: "https://food-detect-recomendator-547kwfnkdq-uc.a.run.app",
 });
 
 export default backendAPI;
