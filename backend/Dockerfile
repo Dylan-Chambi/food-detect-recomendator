@@ -1,6 +1,8 @@
 FROM python:3.11
 ENV PORT 8080
 
+RUN apt-get update && apt-get install libgl1 -y
+
 COPY requirements.txt /
 RUN pip install -r requirements.txt
 
