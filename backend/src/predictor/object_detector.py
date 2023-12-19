@@ -26,6 +26,8 @@ class ObjectDetector(GeneralDetector):
     def detect_objects(self, image, confidence: float) -> ImageDetection:
         results = self.model.predict(image, conf=confidence)
 
+        image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
         class_ids = []
         instance_ids = []
         scores = []
@@ -46,7 +48,7 @@ class ObjectDetector(GeneralDetector):
                 boxes_sizes.append(box)
 
 
-        image_pil = Image.fromarray(np.array(image), 'RGB')
+        image_pil = Image.fromarray(image_rgb)
 
         height, width = image_pil.size
 
