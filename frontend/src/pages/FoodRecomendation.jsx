@@ -30,7 +30,7 @@ export const FoodRecomendation = () => {
                 alert('Error')
             })
         } else {
-            navigate('/')
+            navigate('/food-detect-recomendator')
         }
     }, [params.id])
 

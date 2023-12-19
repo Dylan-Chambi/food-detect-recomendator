@@ -15,7 +15,7 @@ SETTINGS = get_settings()
 class ObjectDetector(GeneralDetector):
     def __init__(self):
         self.model_name = SETTINGS.yolo_version
-        self.model = YOLO('./backend/src/detection_models/' + self.model_name)
+        self.model = YOLO('./src/detection_models/' + self.model_name)
         super().__init__(self.model)
 
 
