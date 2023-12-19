@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import backendAPI from '../config/backendAPI'
@@ -32,8 +32,19 @@ export const FoodRecomendation = () => {
         }
     }, [params.id])
 
+    const handleDelete = () => {
+        const query = new URLSearchParams()
+        query.append('recomendation_id', params.id)
+        backendAPI.delete(`/delete-food-recomendation?${query.toString()}`).then(() => {
+            window.history.back()
+        }).catch((err) => {
+            console.log(err)
+            alert('Error')
+        })
+    }
+
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', alignItems: 'center', justifyContent: 'center', margin: '5rem' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', margin: '5rem' }}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6} sx={{ display: 'flex', flexDirection: 'column', borderRight: '1px solid black', paddingRight: '1rem' }}>
                     <Typography variant="h4" gutterBottom>
@@ -98,6 +109,14 @@ export const FoodRecomendation = () => {
                     })}
                 </Grid>
             </Grid>
+            <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: '2rem' }}>
+            <Button variant="contained" component="label" onClick={() => window.history.back()} sx={{ height: 'fit-content', alignSelf: 'center', marginTop: '2rem' }}>
+                Back
+            </Button>
+            <Button variant="contained" component="label" onClick={() => handleDelete()} sx={{ height: 'fit-content', alignSelf: 'center', marginTop: '2rem', marginLeft: '2rem', backgroundColor: 'red', color: 'white', '&:hover': { backgroundColor: '#b30000' } }}>
+                Delete
+            </Button>
+            </Box>
         </Box>
     )
 }
