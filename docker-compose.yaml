@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      args:
+        PORT: 8080
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./backend/.env
+    mem_limit: 2GB
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL}
+    ports:
+      - "80:80"
+    mem_limit: 256MB
+    env_file:
+      - ./frontend/.env
