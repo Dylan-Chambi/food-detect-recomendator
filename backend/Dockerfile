@@ -1,18 +1,32 @@
-FROM python:3.11
+FROM python:3.11-slim as builder
+
+WORKDIR /app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
+    apt-get update && \
+    apt-get install -y --no-install-recommends gcc
+
+COPY requirements.txt .
+RUN --mount=type=cache,target=/root/.cache/pip pip install --no-cache-dir --prefix /install -r requirements.txt
+
+
+FROM python:3.11-slim as production
+
 ENV PORT 8080
 
-RUN apt-get update && apt-get install libgl1 -y
+RUN --mount=type=cache,target=/var/cache/apt --mount=type=cache,target=/var/lib/apt \
+    apt-get update && \
+    apt-get install -y --no-install-recommends libgl1 libgl1-mesa-glx libglib2.0-0 && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /
-RUN pip install -r requirements.txt
+WORKDIR /app
 
+COPY --from=builder /install /usr/local
 
-COPY ./src /src
-
-RUN mkdir -p ./src/detection_models
-
-RUN curl -L https://storage.googleapis.com/topicos-ia-2023/yolov8x-custom.pt -o ./src/detection_models/yolov8x-custom.pt
-
-COPY app.py /app.py
+COPY app.py .
+COPY src ./src
 
 CMD uvicorn app:app --host 0.0.0.0 --port ${PORT}
