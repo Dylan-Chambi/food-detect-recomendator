@@ -1,6 +1,5 @@
 from src.config.config import get_settings
-from langchain.chat_models import ChatOpenAI
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 from src.models.general_recomendator import GeneralRecomendator
