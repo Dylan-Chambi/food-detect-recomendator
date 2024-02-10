@@ -1,9 +1,13 @@
 # Build a vite + react app
 FROM node:18-alpine as build
 
-ARG VITE_BACKEND_URL
+ARG BACKEND_URL
 
-ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
+ARG BACKEND_PORT
+
+ARG BASE_PATH
+
+ENV VITE_BACKEND_URL=${BACKEND_URL}:${BACKEND_PORT}
 
 WORKDIR /app
 
@@ -13,18 +17,32 @@ RUN --mount=type=cache,target=/root/.npm npm install
 
 COPY . .
 
-RUN npm run build
+RUN npm run build -- --base=${BASE_PATH}
 
 # Deploy as nginx static site
 
 FROM nginx:alpine
 
-ARG VITE_BACKEND_URL
+ARG FRONTEND_HOST
 
-ENV VITE_BACKEND_URL=${VITE_BACKEND_URL}
+ARG FRONTEND_PORT
+
+ARG BASE_PATH
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+COPY nginx.conf /tmp/nginx.conf.template
+
+ENV HOST=${FRONTEND_HOST}
+
+ENV PORT=${FRONTEND_PORT}
+
+ENV BASE_PATH=${BASE_PATH}
+
+RUN envsubst '$HOST $PORT $BASE_PATH' < /tmp/nginx.conf.template > /etc/nginx/conf.d/default.conf
+
+EXPOSE ${FRONTEND_PORT}
 
 CMD ["nginx", "-g", "daemon off;"]

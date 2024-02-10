@@ -63,7 +63,7 @@ export const FoodRecList = () => {
                                 <Button
                                     variant="contained"
                                     component="label"
-                                    onClick={() => navigate(`/food-detect-recomendator/food-recomendation/${item.id}`)}
+                                    onClick={() => navigate(`${import.meta.env.BASE_URL}food-recomendation/${item.id}`)}
                                     sx={{ height: 'fit-content', justifySelf: 'center', backgroundColor: '#1b5e20', color: 'white', '&:hover': { backgroundColor: '#2e7d32' } }}
                                     fullWidth
                                 >

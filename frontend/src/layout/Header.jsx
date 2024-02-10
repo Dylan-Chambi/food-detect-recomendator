@@ -20,10 +20,10 @@ const drawerWidth = 240;
 const navItems = [
 {
     name: 'Home',
-    path: '/food-detect-recomendator/'
+    path: import.meta.env.BASE_URL
 }, {
     name: 'Food Recomendation List',
-    path: '/food-detect-recomendator/food-recomendation-list'
+    path: `${import.meta.env.BASE_URL}food-recomendation-list`
 }];
 
 function Header(props) {

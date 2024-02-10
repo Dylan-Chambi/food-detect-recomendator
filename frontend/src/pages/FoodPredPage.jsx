@@ -1,5 +1,5 @@
 import { Box, Button, Card, Typography } from '@mui/material'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import backendAPI from '../config/backendAPI'
 import FileUploader from '../components/fileUploader/fileUploader'
@@ -15,7 +15,7 @@ export const FoodPredPage = () => {
         formData.append('image_file', selectedImg)
         backendAPI.post('/predict-food-image', formData).then((res) => {
             if (res.data.id !== undefined && res.data.id !== null && res.data.id !== "null") {
-                navigate(`/food-detect-recomendator/food-recomendation/${res.data.id}`)
+                navigate(`${import.meta.env.BASE_URL}food-recomendation/${res.data.id}`)
             } else{
                 alert('Error')
             }
@@ -26,6 +26,10 @@ export const FoodPredPage = () => {
             setIsFetching(false)
         })
     }
+
+    useEffect(() => {
+        console.log(import.meta.env.VITE_BACKEND_URL)
+    }, [])
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>

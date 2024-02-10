@@ -12,7 +12,7 @@ const Redirect = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        navigate('/food-detect-recomendator')
+        navigate(import.meta.env.BASE_URL)
     }, [])
     return (
         <div>
@@ -21,21 +21,23 @@ const Redirect = () => {
     )
 }
 
+const basePath = import.meta.env.BASE_URL;
+
 const router = createBrowserRouter([
     {
-        path: "/food-detect-recomendator",
+        path: basePath,
         element: <Header />,
         children: [
             {
-                path: "/food-detect-recomendator",
+                path: basePath,
                 element: <FoodPredPage />
             },
             {
-                path: "/food-detect-recomendator/food-recomendation/:id",
+                path: `${basePath}food-recomendation/:id`,
                 element: <FoodRecomendation />
             },
             {
-                path: "/food-detect-recomendator/food-recomendation-list",
+                path: `${basePath}food-recomendation-list`,
                 element: <FoodRecList />
             }
         ]
