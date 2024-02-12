@@ -19,9 +19,8 @@ COPY . .
 
 RUN npm run build -- --base=${BASE_PATH}
 
-# Deploy as nginx static site
 
-FROM nginx:alpine
+FROM nginx:alpine as production
 
 ARG FRONTEND_HOST
 
@@ -30,8 +29,6 @@ ARG FRONTEND_PORT
 ARG BASE_PATH
 
 COPY --from=build /app/dist /usr/share/nginx/html
-
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 COPY nginx.conf /tmp/nginx.conf.template
 
